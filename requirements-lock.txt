@@ -1,0 +1,14 @@
+# Pinned direct package versions used in the experiment. NOT a complete dependency
+# lock: transitive versions and wheel hashes/platforms are not pinned.
+# Verified in a clean CPU environment; see reports/clean_environment.json.
+numpy==1.26.4
+scipy==1.16.3
+torch==2.9.1
+Pillow==10.4.0
+pandas==2.3.3
+matplotlib==3.10.8
+requests==2.32.3
+beautifulsoup4==4.12.3
+threadpoolctl==3.6.0
+pytest==7.4.4
+setuptools==80.9.0

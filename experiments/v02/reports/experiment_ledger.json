@@ -1,0 +1,46 @@
+{
+  "versions": {
+    "budget_dev_v02": {
+      "expected_records": 144,
+      "invocation": {
+        "trajectories_refitted": 48,
+        "trajectories_cached_verified": 0,
+        "checkpoints_created": 144,
+        "completed_utc": "2026-10-13T05:55:27.066848+00:00"
+      }
+    },
+    "budget_val_v02": {
+      "expected_records": 1296,
+      "invocation": {
+        "trajectories_refitted": 432,
+        "trajectories_cached_verified": 0,
+        "checkpoints_created": 1296,
+        "completed_utc": "2026-10-13T06:14:02.030855+00:00"
+      }
+    },
+    "test_v02": {
+      "expected_records": 864,
+      "invocation": {
+        "refitted": 864,
+        "cached_verified": 0,
+        "failed": 0,
+        "completed_utc": "2026-10-13T06:21:11.129819+00:00",
+        "note": "A cache-only invocation is NOT an independent reproduction"
+      }
+    }
+  },
+  "neural_trajectories": 480,
+  "diagnostic_checkpoints": 1440,
+  "new_main_refitted": 864,
+  "old_main_fits_reused": 0,
+  "additional_hyperparameter_runs": 0,
+  "fresh_development_fits": 4,
+  "fresh_frozen_test_fits": 4,
+  "real_200_step_equivalence_fits": 4,
+  "total_new_fit_invocations_excluding_unit_tests": 1364,
+  "unit_test_cases": 15,
+  "all_main_metric_recomputations": 1728,
+  "scope": "Checkpoint saves share trajectories and are NOT independent fits",
+  "public_candidate_fresh_fits": 4,
+  "explicit_cpu_fresh_fits": 4
+}

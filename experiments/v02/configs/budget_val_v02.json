@@ -1,0 +1,153 @@
+{
+  "protocol": {
+    "selection_seed": 20261013,
+    "map_counts": {
+      "dev": 18,
+      "val": 6,
+      "test": 6
+    },
+    "tx_per_map": 2,
+    "fractions": [
+      0.01,
+      0.05,
+      0.1
+    ],
+    "mechanisms": [
+      "random",
+      "block"
+    ],
+    "seeds": [
+      11,
+      22,
+      33
+    ],
+    "hole_size": 64,
+    "gradient_quantile": 0.9,
+    "candidates": {
+      "idw": [
+        {
+          "k": 8,
+          "power": 2.0
+        },
+        {
+          "k": 16,
+          "power": 2.0
+        }
+      ],
+      "smooth": [
+        {
+          "lam": 0.05,
+          "rtol": 1e-05,
+          "maxiter": 2500
+        },
+        {
+          "lam": 0.5,
+          "rtol": 1e-05,
+          "maxiter": 2500
+        }
+      ],
+      "lowrank": [
+        {
+          "rank": 4,
+          "steps": 200,
+          "lr": 0.03,
+          "reg": 0.001
+        },
+        {
+          "rank": 12,
+          "steps": 200,
+          "lr": 0.03,
+          "reg": 0.001
+        },
+        {
+          "rank": 4,
+          "steps": 200,
+          "lr": 0.03,
+          "reg": 0.05
+        }
+      ],
+      "mlp": [
+        {
+          "bands": 3,
+          "width": 64,
+          "steps": 200,
+          "lr": 0.003,
+          "reg": 1e-05,
+          "batch_size": 1024
+        },
+        {
+          "bands": 5,
+          "width": 64,
+          "steps": 200,
+          "lr": 0.003,
+          "reg": 1e-05,
+          "batch_size": 1024
+        }
+      ]
+    },
+    "validation_fraction": 0.05,
+    "validation_seeds": [
+      11
+    ],
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 31415
+  },
+  "baseline_methods": {
+    "idw": {
+      "k": 16,
+      "power": 2.0
+    },
+    "lowrank": {
+      "lr": 0.03,
+      "rank": 4,
+      "reg": 0.05,
+      "steps": 200
+    },
+    "mlp": {
+      "bands": 3,
+      "batch_size": 1024,
+      "lr": 0.003,
+      "reg": 1e-05,
+      "steps": 200,
+      "width": 64
+    },
+    "smooth": {
+      "lam": 0.05,
+      "maxiter": 2500,
+      "rtol": 1e-05
+    }
+  },
+  "checkpoints": [
+    200,
+    1000,
+    3000
+  ],
+  "split": "val",
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "dev_rule": "First two development regions in original preselected manifest; all two Tx; seed 11",
+  "validation_rule": "All six validation regions, both Tx, both mechanisms, all three fractions, seeds 11/22/33",
+  "logging_steps": [
+    0,
+    1,
+    10,
+    25,
+    50,
+    100,
+    200,
+    400,
+    600,
+    800,
+    1000,
+    1500,
+    2000,
+    2500,
+    3000
+  ],
+  "metric_timing": "After parameter update; minibatch loss explicitly pre-update",
+  "score": "Mean region hidden RMSE; equal mechanisms and fractions, Tx/seeds within region",
+  "further_tuning_rule": "After budget validation only: if normalized full-observed RMSE remains >=0.04 for every budget, inspect regularization/objective plateau on dev first. At most two additional regularization or LR candidates; ranks/architecture unchanged. No test-based tuning."
+}

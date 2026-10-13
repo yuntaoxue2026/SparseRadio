@@ -1,0 +1,31 @@
+{
+  "methods": {
+    "idw": {
+      "k": 16,
+      "power": 2.0
+    },
+    "lowrank": {
+      "lr": 0.03,
+      "rank": 4,
+      "reg": 0.05,
+      "steps": 200
+    },
+    "mlp": {
+      "bands": 3,
+      "batch_size": 1024,
+      "lr": 0.003,
+      "reg": 1e-05,
+      "steps": 200,
+      "width": 64
+    },
+    "smooth": {
+      "lam": 0.05,
+      "maxiter": 2500,
+      "rtol": 1e-05
+    }
+  },
+  "experiment_sha256": "27d5f565f84d0402",
+  "selection_rule": "Minimum mean hidden RMSE; equal map and mechanism weights; 5%, seed 11; ties lexical config",
+  "validation_runs": 216,
+  "locked_utc": "2026-10-13T04:15:54.035203+00:00"
+}

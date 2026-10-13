@@ -1,0 +1,32 @@
+[
+  {
+    "file": "official_index.html",
+    "url": "https://radiomapseer.github.io/index.html",
+    "sha256": "6921c34ac3e326fbbbfaa7daf53102f843f047a0b40690cac78b1825d89eaaed",
+    "accessed_utc": "2026-10-13T05:59:27.411602+00:00"
+  },
+  {
+    "file": "official_source.html",
+    "url": "https://raw.githubusercontent.com/radiomapseer/radiomapseer.github.io/master/index.html",
+    "sha256": "6921c34ac3e326fbbbfaa7daf53102f843f047a0b40690cac78b1825d89eaaed",
+    "accessed_utc": "2026-10-13T05:59:29.169575+00:00"
+  },
+  {
+    "file": "official_index.md",
+    "url": "https://raw.githubusercontent.com/radiomapseer/radiomapseer.github.io/master/index.md",
+    "sha256": "80c55c575f619318ac85b53becca445ec68798c4c59b9c15ffb2811c37514921",
+    "accessed_utc": "2026-10-13T05:59:30.928809+00:00"
+  },
+  {
+    "file": "author_readme.md",
+    "url": "https://raw.githubusercontent.com/RonLevie/RadioUNet/master/README.md",
+    "sha256": "d0213c63d7a8fd0367b295d1fcfebbb8404821a9950710ee7f7cf65b72e60c7b",
+    "accessed_utc": "2026-10-13T05:59:32.809790+00:00"
+  },
+  {
+    "file": "cc_by_4_deed.html",
+    "url": "https://creativecommons.org/licenses/by/4.0/",
+    "sha256": "8dda1ccec4be91fc80821d4e4fd5c568072b9a3a74b2fdc07c249a27e920ef01",
+    "accessed_utc": "2026-10-13T05:59:34.541850+00:00"
+  }
+]

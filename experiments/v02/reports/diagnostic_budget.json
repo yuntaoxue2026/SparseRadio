@@ -1,0 +1,10 @@
+{
+  "development_trajectories": 48,
+  "mean_3000_seconds": {
+    "lowrank": 0.7333454182080459,
+    "mlp": 1.6463921215448256
+  },
+  "estimated_validation_seconds": 514.0233085866201,
+  "decision": "Use all six validation regions and all three seeds; no size reduction",
+  "estimate_scope": "Includes diagnostic scoring/forward passes; excludes output I/O"
+}

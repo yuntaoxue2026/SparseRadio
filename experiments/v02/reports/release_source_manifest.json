@@ -1,0 +1,26 @@
+{
+  "scientific_source_sha256": "e4c8399c0dd9e91230f7b6c2bb7ec891e73237a05034bdf9c7943846d85c6bef",
+  "final_source_files_sha256": {
+    "src/sparseradiomap/__init__.py": "d528891f1d7d6d0e454ff994d29e5302851503a302d3c7e188aa885b14fdcc9a",
+    "src/sparseradiomap/core.py": "c60b34211f06fed77f54034f7b9a64871c935a2d767a2b7b697acff5e5911936",
+    "src/sparseradiomap/methods.py": "31f3392e82b3228b13bf7ceb2260ec0f7aeae99ca79619510a1de7a776fbaf52",
+    "src/sparseradiomap/data.py": "0bb0a1c33a010bfa0f361cd669a17aeea4242007fa558b04bcaf86b086121e22",
+    "src/sparseradiomap/experiment.py": "5b327eda5414ee402278c0ab61f77276a09cf43b53166b2f6d6c51519de30f16",
+    "src/sparseradiomap/analysis.py": "c931b7c3591687e4cff9001a580e659ba93e8765d2e41869743d38aeb7eab12a",
+    "src/sparseradiomap/training.py": "b71b6b405ea29d06eddb6838d7782f370871983125c558523b85c9ce36ba0a07",
+    "src/sparseradiomap/versioned.py": "41e7d6eb6d7107c9719aa8e0a0c407f4d781e870f6a59a57c771376e268b08b3",
+    "src/sparseradiomap/diagnostic.py": "242858cae1272dc01fdd14758383d538c393a13024803ed3e72eb4a0c196632b",
+    "scripts/download.py": "e61e41d8569a0a3c5678882334ee689e4b1abbef09cb5cd53a22b4a6ad7d2506",
+    "scripts/pipeline.py": "15059f2313d7690432e466c19ac7e16b9e9a8dda72d05c834437d857c8f482c2",
+    "scripts/write_audit.py": "0913ef0fd61d12f8af6f68b527624d6bc2176b85cb9d53f50c4017d91dcf2c10",
+    "scripts/verify_results.py": "c023c3d1fa0b06a7f25f035bc39ec4c6e1747c88446abde5bd84d941585ff0e6",
+    "scripts/verify_release.py": "c301c7c6f5c722d53316dde905c3d65736ed498403a066c5db7815abafbadffa",
+    "scripts/release_analysis.py": "9ec79b8f15973e68d9e7b630fa46d8aa387b940ef64c3fc5fb2a1f6bf33b58c6",
+    "scripts/package_release.py": "4be9e7395717b8de6765701a2c29896cc024f9b892b4e7aa1a501cce7e788f96",
+    "tests/test_science.py": "f588c8166aa9eca3b76e4c4816f44f840b4274c8b3b996d30f214fd9042b0b04",
+    "tests/test_first_run.py": "9d8fab8c703a5444775aab610e3b2543ea4af9c9754d80e5ba907c621368500e",
+    "tests/test_versions_training.py": "ea588564356c212bc24b9240591252eb288d056a51aac684f36eb2395145384f"
+  },
+  "created_utc": "2026-10-13T06:56:54.663635+00:00",
+  "note": "Fit/score/selection code unchanged since main freeze. CLI explicit-CPU option, verification, presentation and packaging received subsequent release checks; current full source hashes are recorded here."
+}

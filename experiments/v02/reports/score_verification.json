@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "baseline_v01": {
+      "records": 864,
+      "max_csv_difference": 1.8477059189336842e-06,
+      "max_json_difference": 1.8477059189336842e-06
+    },
+    "test_v02": {
+      "records": 864,
+      "max_csv_difference": 1.8477059189336842e-06,
+      "max_json_difference": 1.8477059189336842e-06
+    }
+  },
+  "paired_masks": 216,
+  "equal_observation_counts": true,
+  "main_recomputed_from_raw": true,
+  "devices": "CPU only actually tested",
+  "completed_utc": "2026-10-13T06:23:04.689868+00:00"
+}

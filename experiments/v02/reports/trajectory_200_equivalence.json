@@ -1,0 +1,8 @@
+{
+  "max_absolute_prediction_difference": {
+    "lowrank": 0.0,
+    "mlp": 0.0
+  },
+  "condition": "First dev image, 5% random, seed 11; two NEW fits per method",
+  "fits": 4
+}

@@ -1,0 +1,77 @@
+{
+  "refitted": 4,
+  "cached": 0,
+  "split": "dev",
+  "input_only": "SHA-256 verified original ZIP; no borrowed processed arrays, masks, predictions or run JSON",
+  "comparisons": [
+    {
+      "method": "idw",
+      "reference_available": true,
+      "masks_equal": true,
+      "max_prediction_abs_difference": 0.0,
+      "hidden_rmse_db_difference": 0.0
+    },
+    {
+      "method": "smooth",
+      "reference_available": true,
+      "masks_equal": true,
+      "max_prediction_abs_difference": 0.0,
+      "hidden_rmse_db_difference": 0.0
+    },
+    {
+      "method": "lowrank",
+      "reference_available": true,
+      "masks_equal": true,
+      "max_prediction_abs_difference": 0.0,
+      "hidden_rmse_db_difference": 0.0
+    },
+    {
+      "method": "mlp",
+      "reference_available": true,
+      "masks_equal": true,
+      "max_prediction_abs_difference": 0.0,
+      "hidden_rmse_db_difference": 0.0
+    }
+  ],
+  "package_versions": {
+    "sparseradiomap": "0.1.0",
+    "kiwisolver": "1.5.1",
+    "soupsieve": "3.0.3",
+    "typing_extensions": "4.16.0",
+    "urllib3": "2.8.0",
+    "requests": "2.32.3",
+    "cycler": "0.12.1",
+    "certifi": "2026.7.22",
+    "iniconfig": "2.3.1",
+    "MarkupSafe": "3.0.4",
+    "pluggy": "1.6.0",
+    "threadpoolctl": "3.6.0",
+    "pytest": "7.4.4",
+    "filelock": "4.1.1",
+    "six": "1.17.0",
+    "matplotlib": "3.10.8",
+    "idna": "3.20",
+    "packaging": "26.3",
+    "charset-normalizer": "3.5.2",
+    "contourpy": "1.3.3",
+    "python-dateutil": "2.9.0.post0",
+    "beautifulsoup4": "4.12.3",
+    "pyparsing": "3.3.3",
+    "Jinja2": "3.1.6",
+    "numpy": "1.26.4",
+    "pytz": "2026.5",
+    "fsspec": "2026.9.0",
+    "setuptools": "80.9.0",
+    "mpmath": "1.3.0",
+    "pillow": "10.4.0",
+    "scipy": "1.16.3",
+    "networkx": "3.7",
+    "pandas": "2.3.3",
+    "fonttools": "4.66.1",
+    "tzdata": "2026.5",
+    "sympy": "1.14.0",
+    "torch": "2.9.1"
+  },
+  "completed_utc": "2026-10-13T06:10:30.427698+00:00",
+  "device": "cpu"
+}

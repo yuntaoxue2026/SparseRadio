@@ -1,0 +1,93 @@
+{
+  "selection_seed": 20261013,
+  "map_counts": {
+    "dev": 18,
+    "val": 6,
+    "test": 6
+  },
+  "tx_per_map": 2,
+  "fractions": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "mechanisms": [
+    "random",
+    "block"
+  ],
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "hole_size": 64,
+  "gradient_quantile": 0.9,
+  "candidates": {
+    "idw": [
+      {
+        "k": 8,
+        "power": 2.0
+      },
+      {
+        "k": 16,
+        "power": 2.0
+      }
+    ],
+    "smooth": [
+      {
+        "lam": 0.05,
+        "rtol": 1e-05,
+        "maxiter": 2500
+      },
+      {
+        "lam": 0.5,
+        "rtol": 1e-05,
+        "maxiter": 2500
+      }
+    ],
+    "lowrank": [
+      {
+        "rank": 4,
+        "steps": 200,
+        "lr": 0.03,
+        "reg": 0.001
+      },
+      {
+        "rank": 12,
+        "steps": 200,
+        "lr": 0.03,
+        "reg": 0.001
+      },
+      {
+        "rank": 4,
+        "steps": 200,
+        "lr": 0.03,
+        "reg": 0.05
+      }
+    ],
+    "mlp": [
+      {
+        "bands": 3,
+        "width": 64,
+        "steps": 200,
+        "lr": 0.003,
+        "reg": 1e-05,
+        "batch_size": 1024
+      },
+      {
+        "bands": 5,
+        "width": 64,
+        "steps": 200,
+        "lr": 0.003,
+        "reg": 1e-05,
+        "batch_size": 1024
+      }
+    ]
+  },
+  "validation_fraction": 0.05,
+  "validation_seeds": [
+    11
+  ],
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 31415
+}

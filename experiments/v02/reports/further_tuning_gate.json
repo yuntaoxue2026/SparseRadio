@@ -1,0 +1,17 @@
+{
+  "gate": "Low-rank mean full-observed raw RMSE >=0.04 at every budget",
+  "triggered": false,
+  "observed_rmse_by_step": {
+    "200": 0.038884675158539675,
+    "1000": 0.03859552105304435,
+    "3000": 0.03861273639104506
+  },
+  "selected_step": 3000,
+  "ridge_candidates": [
+    0.01,
+    0.1
+  ],
+  "rank_and_lr": "Unchanged",
+  "recorded_utc": "2026-10-13T06:15:14.793508+00:00",
+  "source_validation_plan_sha256": "6d4c3c234b7b96b5bb542db7a6e87375c2126fbbf83391a0c40d7ea712165158"
+}

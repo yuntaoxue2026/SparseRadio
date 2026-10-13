@@ -1,0 +1,38 @@
+{
+  "version": "test_v02",
+  "methods": {
+    "idw": {
+      "k": 16,
+      "power": 2.0
+    },
+    "lowrank": {
+      "lr": 0.03,
+      "rank": 4,
+      "reg": 0.05,
+      "steps": 3000
+    },
+    "mlp": {
+      "bands": 3,
+      "batch_size": 1024,
+      "lr": 0.003,
+      "reg": 1e-05,
+      "steps": 200,
+      "width": 64
+    },
+    "smooth": {
+      "lam": 0.05,
+      "maxiter": 2500,
+      "rtol": 1e-05
+    }
+  },
+  "scientific_source_sha256": "e4c8399c0dd9e91230f7b6c2bb7ec891e73237a05034bdf9c7943846d85c6bef",
+  "validation_version": "budget_val_v02",
+  "validation_plan_sha256": "6d4c3c234b7b96b5bb542db7a6e87375c2126fbbf83391a0c40d7ea712165158",
+  "additional_validation_plan_sha256": null,
+  "candidates_sha256": "8a994bc330f660104924fbd08d656c0a219ffb2ad77efb9b2e9648275b90aa76",
+  "validation_records": 1296,
+  "selection_rule": "Equal-weight mean region hidden RMSE across both mechanisms and all three fractions; average Tx/seed within each region/condition; tie selects fewer steps",
+  "unchanged_methods": "IDW and smooth parameters frozen from baseline; not re-selected from seen holdout",
+  "holdout_status": "Follow-up exploratory evaluation on the same previously viewed holdout",
+  "frozen_utc": "2026-10-13T06:15:19.527113+00:00"
+}

@@ -1,0 +1,32 @@
+{
+  "frozen_utc": "2026-10-13T06:16:09.509510+00:00",
+  "scientific_source_sha256": "e4c8399c0dd9e91230f7b6c2bb7ec891e73237a05034bdf9c7943846d85c6bef",
+  "selected_config_sha256": "7c159d281e92993caa4d0cf9ae7441a09f34512c4a2a52b5074898c03b884635",
+  "files": {
+    "src/sparseradiomap/__init__.py": "d528891f1d7d6d0e454ff994d29e5302851503a302d3c7e188aa885b14fdcc9a",
+    "src/sparseradiomap/core.py": "c60b34211f06fed77f54034f7b9a64871c935a2d767a2b7b697acff5e5911936",
+    "src/sparseradiomap/methods.py": "31f3392e82b3228b13bf7ceb2260ec0f7aeae99ca79619510a1de7a776fbaf52",
+    "src/sparseradiomap/data.py": "0bb0a1c33a010bfa0f361cd669a17aeea4242007fa558b04bcaf86b086121e22",
+    "src/sparseradiomap/experiment.py": "5b327eda5414ee402278c0ab61f77276a09cf43b53166b2f6d6c51519de30f16",
+    "src/sparseradiomap/analysis.py": "c931b7c3591687e4cff9001a580e659ba93e8765d2e41869743d38aeb7eab12a",
+    "src/sparseradiomap/training.py": "b71b6b405ea29d06eddb6838d7782f370871983125c558523b85c9ce36ba0a07",
+    "src/sparseradiomap/versioned.py": "41e7d6eb6d7107c9719aa8e0a0c407f4d781e870f6a59a57c771376e268b08b3",
+    "src/sparseradiomap/diagnostic.py": "242858cae1272dc01fdd14758383d538c393a13024803ed3e72eb4a0c196632b",
+    "scripts/download.py": "e61e41d8569a0a3c5678882334ee689e4b1abbef09cb5cd53a22b4a6ad7d2506",
+    "scripts/pipeline.py": "5585467bc966e0391d8190ee06363cb44c7b2dcc7766bebab9c1d74e0d993851",
+    "scripts/write_audit.py": "0913ef0fd61d12f8af6f68b527624d6bc2176b85cb9d53f50c4017d91dcf2c10",
+    "scripts/verify_results.py": "c023c3d1fa0b06a7f25f035bc39ec4c6e1747c88446abde5bd84d941585ff0e6",
+    "scripts/verify_release.py": "b0e8e1456051c4efdd38ccb9caaa01d35409cedb149c0a38bb0d5e2dff80e988",
+    "scripts/release_analysis.py": "2ebadfed21e1ff73819f36680b42fabf6a1ace90fa5736abd5221e0137acf835",
+    "tests/test_science.py": "f588c8166aa9eca3b76e4c4816f44f840b4274c8b3b996d30f214fd9042b0b04",
+    "tests/test_first_run.py": "9d8fab8c703a5444775aab610e3b2543ea4af9c9754d80e5ba907c621368500e",
+    "tests/test_versions_training.py": "ea588564356c212bc24b9240591252eb288d056a51aac684f36eb2395145384f",
+    "experiments/v02/configs/protocol.json": "dedc0e124235d7058bd4d632dfd3f6c4e31807a0aa8c450b4db0b61a38051dbc",
+    "experiments/v02/configs/baseline_selected.json": "ae3258405ce28134baedc1bbdf7519e4edf14f0c356a16f06822550497639000",
+    "experiments/v02/configs/budget_dev_v02.json": "0a17cbcd324033da626342835c5dffa4c319509b4b2d52bc1281b680878c3d94",
+    "experiments/v02/configs/budget_val_v02.json": "8402102e4f3cbca2ed41261eb8bba756a291ade51efcb06ec3d2b0f9c6e234db",
+    "experiments/v02/configs/selected_v02.json": "7c159d281e92993caa4d0cf9ae7441a09f34512c4a2a52b5074898c03b884635"
+  },
+  "holdout": "Previously viewed; follow-up exploratory evaluation",
+  "neural_device": "CPU only tested"
+}

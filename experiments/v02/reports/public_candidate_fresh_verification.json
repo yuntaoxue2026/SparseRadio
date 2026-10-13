@@ -1,0 +1,33 @@
+{
+  "package_execution": "Actual minimal public staging code, clean environment, empty independent output, ZIP-only input",
+  "refitted": 4,
+  "cached": 0,
+  "tests_passed": 15,
+  "postfit_reference_check": "Public package has no arrays; separately compared with complete local baseline after fresh fitting",
+  "comparisons": [
+    {
+      "method": "idw",
+      "masks_equal": true,
+      "max_prediction_difference": 0.0,
+      "hidden_rmse_db_difference": 0.0
+    },
+    {
+      "method": "smooth",
+      "masks_equal": true,
+      "max_prediction_difference": 0.0,
+      "hidden_rmse_db_difference": 0.0
+    },
+    {
+      "method": "lowrank",
+      "masks_equal": true,
+      "max_prediction_difference": 0.0,
+      "hidden_rmse_db_difference": 0.0
+    },
+    {
+      "method": "mlp",
+      "masks_equal": true,
+      "max_prediction_difference": 0.0,
+      "hidden_rmse_db_difference": 0.0
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "version": "0.1.0",
+  "repository": "https://github.com/yuntaoxue2026/SparseRadio",
+  "branch": "main",
+  "source_zip": "SparseRadioMap_v01_public_candidate.zip",
+  "source_zip_sha256": "1be40c938214b187659b535f7e001bf88d63f9f6e73954cb1cbbfa34510ec044",
+  "source_zip_files": 96,
+  "changed_candidate_files": [
+    "README.md",
+    "CITATION.cff",
+    "CHANGELOG.md",
+    "DATA_LICENSE.md",
+    "experiments/v02/reports/report_zh.md",
+    "experiments/v02/reports/DATA_LICENSE.md"
+  ],
+  "changes": "Documentation version/publication wording and repository citation; code, configuration, numerical results and figures unchanged.",
+  "scientific_source_sha256": "e4c8399c0dd9e91230f7b6c2bb7ec891e73237a05034bdf9c7943846d85c6bef",
+  "install": "Independent Python 3.12.7 environment, pinned direct requirements plus editable project; 37 resolved packages. Final repository source reinstalled successfully.",
+  "tests": {
+    "passed": 15,
+    "failed": 0
+  },
+  "full_experiments_rerun": false,
+  "remote_initial_state": "Empty public repository, owner yuntaoxue2026, default branch main, push permission confirmed",
+  "checks": {
+    "excluded_data_arrays": true,
+    "secrets_and_local_paths": true,
+    "markdown_local_links": true,
+    "diff_review": "97 curated files; generated SVG path whitespace and original CSV CRLF retained to preserve evidence hashes; code and Markdown checked separately."
+  },
+  "validated_utc": "2026-10-13T07:58:19.577795+00:00",
+  "published_source_hashes": {
+    "src/sparseradiomap/methods.py": "31f3392e82b3228b13bf7ceb2260ec0f7aeae99ca79619510a1de7a776fbaf52",
+    "src/sparseradiomap/versioned.py": "41e7d6eb6d7107c9719aa8e0a0c407f4d781e870f6a59a57c771376e268b08b3",
+    "src/sparseradiomap/__init__.py": "d528891f1d7d6d0e454ff994d29e5302851503a302d3c7e188aa885b14fdcc9a",
+    "src/sparseradiomap/core.py": "c60b34211f06fed77f54034f7b9a64871c935a2d767a2b7b697acff5e5911936",
+    "src/sparseradiomap/diagnostic.py": "242858cae1272dc01fdd14758383d538c393a13024803ed3e72eb4a0c196632b",
+    "src/sparseradiomap/training.py": "b71b6b405ea29d06eddb6838d7782f370871983125c558523b85c9ce36ba0a07",
+    "src/sparseradiomap/data.py": "0bb0a1c33a010bfa0f361cd669a17aeea4242007fa558b04bcaf86b086121e22",
+    "scripts/verify_release.py": "c301c7c6f5c722d53316dde905c3d65736ed498403a066c5db7815abafbadffa",
+    "scripts/download.py": "e61e41d8569a0a3c5678882334ee689e4b1abbef09cb5cd53a22b4a6ad7d2506",
+    "scripts/release_analysis.py": "9ec79b8f15973e68d9e7b630fa46d8aa387b940ef64c3fc5fb2a1f6bf33b58c6",
+    "scripts/pipeline.py": "15059f2313d7690432e466c19ac7e16b9e9a8dda72d05c834437d857c8f482c2",
+    "scripts/package_release.py": "4be9e7395717b8de6765701a2c29896cc024f9b892b4e7aa1a501cce7e788f96",
+    "tests/test_versions_training.py": "ea588564356c212bc24b9240591252eb288d056a51aac684f36eb2395145384f",
+    "tests/test_science.py": "f588c8166aa9eca3b76e4c4816f44f840b4274c8b3b996d30f214fd9042b0b04",
+    "tests/test_first_run.py": "9d8fab8c703a5444775aab610e3b2543ea4af9c9754d80e5ba907c621368500e"
+  }
+}

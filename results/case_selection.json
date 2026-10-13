@@ -1,0 +1,18 @@
+{
+  "representative": {
+    "map_id": 68,
+    "tx_id": 49,
+    "fraction": 0.05,
+    "mechanism": "random",
+    "seed": 11
+  },
+  "representative_rule": "Lower median IDW hidden RMSE among test images, random 5%, seed 11",
+  "failure": {
+    "map_id": 570,
+    "tx_id": 55,
+    "fraction": 0.01,
+    "mechanism": "block",
+    "seed": 11
+  },
+  "failure_rule": "Maximum low-rank hidden RMSE among test images, block 1%, seed 11"
+}

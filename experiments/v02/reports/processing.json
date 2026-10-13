@@ -1,0 +1,7 @@
+{
+  "archive_sha256": "c80672cea3b3693d4a0a57eefb36a1a7e3ef78e04a99e6842d5a96afb6cc072f",
+  "images": 60,
+  "input": "Read-only original ZIP; no existing processed arrays used",
+  "completed_utc": "2026-10-13T05:52:19.719222+00:00",
+  "dataset_sha256": "1ccbd43b86943b65e0e2c698a07797ea908af5dc6e2a7c8636b74676e52d5a66"
+}

@@ -1,0 +1,23 @@
+{
+  "inputs": {
+    "new_results": "3b589fa54ddc032d6f988066314b1bb40481ad88e009dc364a869fe03e644ba6",
+    "baseline_results": "2391e2523f5834ce6fee1b21847b9d8a7e7a7b66ef1f76ddfdd407da9cf09645",
+    "validation_curves": "88d6866bb57d0f32ad65783ee39751608394ba4901dc7e18cdab49e582ba5a89"
+  },
+  "figure_sha256": {
+    "figures/budget_observed.png": "ff733187031dbd1c1809eb86a73fded2390ef40fd5b03d6fc809f73cb10de5dc",
+    "figures/budget_observed.svg": "31208c5ba4174b10b5138b04b69129260d6a22cbc94e753dc1efcedb613b0358",
+    "figures/budget_hidden.png": "377b3f9462f26d2c6b62bc45e097989eeb2cf9e2a984cf1be09fadc0b953a4b1",
+    "figures/budget_hidden.svg": "9ea0a05bdaf685617e0153fcd5707ea7bbaf60918095505f2f72044de88fcc3a",
+    "figures/budget_error_runtime.png": "0651208fc5bd23b53b55c14c2e45d435675772ee9c30625ddf616dda4252e973",
+    "figures/budget_error_runtime.svg": "e49ee1b0f9f6487d0eb402ba22274815d2a7faf6e4acea50c399a8b2dfbcfe17",
+    "figures/performance_test_v02.png": "19dafcec1e250e1a1e1c3ac5cd5c41f7c138f95413de04a897286427fbf61a34",
+    "figures/performance_test_v02.svg": "2c77312595d94c9435e022a8ca960dedf4501b8fdf4cd5a25792a1da22fb40a5",
+    "figures/baseline_new_paired.png": "ef364f934c5e31b65c87de71e714f867fa525ecbc6cea75b2952fc14d9aac7ad",
+    "figures/baseline_new_paired.svg": "c15b08c83c06e9ad6a79a6d2e4eaf1adcb3a29246c1c16a22f74c319d61f8745",
+    "figures/reconstruction_test_v02.png": "70fb38b19aea67e1faa9cb6c5b874c72df45e9c776db6adb048d817784656c45",
+    "figures/reconstruction_test_v02.svg": "c1d36aa9f3be033e802fb3cfe73b57eace0df65f06c8bae0edfca5a2dfc4c391"
+  },
+  "summaries": "Recomputed from version-bound records; report tables rendered from these summaries",
+  "completed_utc": "2026-10-13T06:57:09.550887+00:00"
+}
