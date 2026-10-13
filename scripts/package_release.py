@@ -40,7 +40,7 @@ def main():
             if p.exists():copy(p.relative_to(ROOT))
     for p in (OUT/'figures').glob('*'):
         if p.suffix in ['.png','.svg']:copy(p.relative_to(ROOT))
-    safe=['report_zh.md','budget_candidate_scores.csv','diagnostic_budget.json','further_tuning_gate.json',
+    safe=['report.md','budget_candidate_scores.csv','diagnostic_budget.json','further_tuning_gate.json',
           'score_verification.json','baseline_v01_recomputed.csv','test_v02_recomputed.csv','clean_environment.json',
           'requirements-resolved-clean.txt','tests.log','clean_tests.log','trajectory_200_equivalence.json',
           'processing.json','presentation_manifest.json','DATA_LICENSE.md','FIGURE_ATTRIBUTION.md','experiment_ledger.json','baseline_integrity.json']

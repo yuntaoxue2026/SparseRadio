@@ -26,7 +26,7 @@ Validation means (dB):
 
 Longer training improved MLP observation fitting but not its aggregate validation hidden error under this model and protocol. Low-rank showed a small hidden-error improvement and an observed-error plateau. These are limited empirical observations, not universal claims about low-rank models or neural fields. Condition-specific curves and regularization/objective decomposition are in the report.
 
-Start with the [Chinese report](experiments/v02/reports/report_zh.md), [budget candidate evidence](experiments/v02/reports/budget_candidate_scores.csv), [new summary](experiments/v02/results/test_v02_summary.csv), [region-paired version differences](experiments/v02/results/baseline_new_paired.csv), and [changelog](CHANGELOG.md).
+Start with the [Experiment report](experiments/v02/reports/report.md), [budget candidate evidence](experiments/v02/reports/budget_candidate_scores.csv), [new summary](experiments/v02/results/test_v02_summary.csv), [region-paired version differences](experiments/v02/results/baseline_new_paired.csv), and [changelog](CHANGELOG.md).
 
 ![Validation hidden-error budget curves](experiments/v02/figures/budget_hidden.png)
 

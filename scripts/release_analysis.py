@@ -158,98 +158,123 @@ def write_report(out,baseline,summaries,paired,budget):
     smooth_idw=new.pivot(index=['fraction','mechanism'],columns='method',values='rmse_db')
     diff=smooth_idw['smooth']-smooth_idw['idw']
     checkpoint_count=1296+ (432 if gate['triggered'] else 0)
-    report=f'''# SparseRadioMap v0.1 发布前修正与预算诊断
+    report=f'''# SparseRadioMap v0.1.0: Corrections and Training-Budget Diagnostics
 
-作者：Yuntao Xue。版本：baseline_v01 → test_v02。当前比较是**同一已查看保留集上的后续探索性评价**，不是全新确认性测试。
+Author: Yuntao Xue. Experimental versions: baseline_v01 → test_v02. This comparison is a **follow-up exploratory evaluation on the same previously viewed holdout**, not a new confirmatory test.
 
-## 1. 保留的基线与修复
+## 1. Preserved baseline and implementation fixes
 
-原始30区域、60无车DPM图，18/6/6开发/验证/测试划分，16流程检查、216调参、864主实验及200步预算均保存。原结果目录未覆盖；history/baseline_v01/snapshot.zip包含旧源码、配置、记录、掩码、预测、报告及图表，snapshot_manifest.json为逐文件SHA-256。原始ZIP再验证SHA-256为c80672cea3b3693d4a0a57eefb36a1a7e3ef78e04a99e6842d5a96afb6cc072f，无重复下载。
+The original experiment used 30 regions and 60 no-car DPM images, with an 18/6/6 development/validation/test region split. Its 16 pipeline checks, 216 tuning runs, 864 main reconstructions and 200-step neural training budget are preserved. Original result directories were not overwritten. The complete local `history/baseline_v01/snapshot.zip` preserves source, configurations, records, masks, predictions, reports and figures; `snapshot_manifest.json` records per-file SHA-256 hashes. The original ZIP was reused without downloading it again, and its SHA-256 was verified as `c80672cea3b3693d4a0a57eefb36a1a7e3ef78e04a99e6842d5a96afb6cc072f`.
 
-修复audit首次运行前显式创建configs/reports/data/processed，开始审计时移除过期完成标记。真实回归测试以临时目录、小型256×256灰度ZIP执行audit，无网络、无预建processed。环境记录及下载目录也显式创建。旧无版本runner拒绝运行，避免源码变化后在旧目录混入新ID。新版使用预期任务manifest：精确绑定源码、参数、配置、数据、掩码；多余、缺失、源变更、身份或文件哈希不符均拒绝汇总。缓存核验与重新拟合分别计数，缓存成功退出不算独立复现。
+The first-run fix explicitly creates `configs`, `reports` and `data/processed` before audit outputs are written, and removes a stale completion marker when an audit starts. The regression test calls `audit()` in a temporary directory with a small, valid 256×256 grayscale ZIP, no network access and no pre-existing processed directory. Environment-recording and download directories are also explicitly created.
 
-## 2. 数据、有效区与物理编码
+The legacy unversioned runner is disabled to prevent new source-dependent run IDs from being mixed with old records. Expected-task manifests bind source, parameters, configuration, data and masks. Exports reject extra or missing records, source changes, identity mismatches and file-hash mismatches. Verified cache reuse and new fits have separate counters. A successful cache-only invocation is not evidence of independent reproduction.
 
-RadioMapSeer是基于城市布局的传播仿真，不是真实测量。本次仅无车DPM；保持原生256×256、1m/pixel，室外有效区由建筑PNG==0定义，室外零灰度保留。y=gray/255，保存负pathgain=-147+100y dB；零值有截断及量化，不能恢复截断前真值。作者额外thresh=0.2未使用。JSON(x,y)映射(row=255-y,col=x)，全量原审计见本地reports/data_audit.md。新版直接从原始ZIP重新生成独立处理数组；没有修改raw。外置文件系统不强制Unix只读权限，逻辑只读加哈希核验，不声称只读挂载。
+## 2. Data, valid pixels and physical encoding
 
-## 3. 预算实验预先定义
+RadioMapSeer contains propagation simulations based on urban layouts, not field measurements. This project uses only DPM without cars at the native 256×256 resolution and 1 m/pixel. Outdoor valid pixels satisfy `building PNG == 0`; outdoor zero-gray pixels remain valid. The normalized target is `y=gray/255`, and saved negative pathgain is `-147+100*y` dB. Zero values are truncated and quantized, so pre-truncation truth cannot be recovered. The author's additional `thresh=0.2` transformation is not applied.
 
-仅开发/验证，绝不据测试排名挑超参数。开发取原manifest前2开发区域、全部2Tx、两机制、三比例、种子11，48训练轨迹/144检查点。测得成本后使用全部6验证区域/12图、随机与64×64空白区、1/5/10%、种子11/22/33；两神经方法共432轨迹/1296检查点。
+JSON `(x,y)` maps to PNG `(row=255-y, col=x)`. The complete original audit is retained in the local `reports/data_audit.md`. The new version independently regenerates processed arrays from the original ZIP without modifying raw data. The external filesystem does not enforce Unix read-only permissions: read-only use is a workflow rule backed by hash verification, not a claim that the volume is mounted read-only.
 
-保持旧结构、初始化、Fourier频率、秩、学习率、正则及随机批次序列；一条轨迹保存200/1000/3000步。记录点预设为0、1、10、25、50、100、200、400、600、800、1000、1500、2000、2500、3000。每点记录完整观测MAE/RMSE（raw及统一裁剪后）、数据MSE、正则、总目标、lr、累计耗时、优化耗时、原始范围及裁剪比例。MLP小批量loss明确是更新前数值，完整观测指标是更新后；不能混淆。隐藏真值仅由 detached numpy 预测的外部评分回调读取，回调返回不影响训练。普通重建的旧final-loss元数据来自最后一次参数更新前，与诊断的更新后完整观测指标明确区别。
+## 3. Prespecified budget experiment
 
-低秩目标MSE+reg·(mean(U²)+mean(V²))，固定观测均值占一个秩，其余秩为残差。MLP使用Adam的耦合L2 weight_decay；记录的完整目标为MSE+(reg/2)·sum(parameter²)，不是把小批量loss叫完整目标。诊断耗时包含日志/评分forward，主实验耗时不含评分/文件I/O，二者不可直接等同。
+Only development and validation data were used for selection; test rankings did not select hyperparameters. Development used the first two development regions in the original manifest, both Tx images per region, both mechanisms, all three fractions and seed 11: 48 training trajectories with 144 checkpoints. After estimating cost, validation used all six validation regions and 12 images, random sampling and 64×64 contiguous holes, observation fractions of 1%, 5% and 10%, and seeds 11/22/33. The two trainable methods produced 432 trajectories and 1,296 checkpoints.
 
-真实开发图200步轨迹与原实现预测最大差异为0（lowrank和MLP）。完整曲线：[training_curves.csv](../results/budget_val_v02/training_curves.csv)。
+Architecture, initialization, Fourier frequencies, rank, learning rate, regularization and random minibatch sequence were held fixed. Each trajectory saved predictions at 200, 1,000 and 3,000 updates. Prespecified logging steps were 0, 1, 10, 25, 50, 100, 200, 400, 600, 800, 1,000, 1,500, 2,000, 2,500 and 3,000. Each log records complete-observation MAE/RMSE before and after the common prediction clipping policy, data MSE, regularization, total objective, learning rate, elapsed and optimization time, raw prediction range and clipping fraction.
 
-## 4. 实际预算结果与选择
+MLP minibatch loss is explicitly measured **before** the update; complete-observation diagnostics are measured **after** the update. Hidden truth is accessed only by an external scoring callback using detached NumPy predictions; callback results do not affect optimization. Legacy ordinary-reconstruction final-loss metadata comes from before the final update and is distinguished from post-update complete-observation diagnostics.
 
-以下先对每个区域内Tx、seed、两机制、三比例等权平均，再跨6验证区域平均；观测RMSE为裁剪后值，完整raw观测误差和目标分解可见曲线CSV。
+The low-rank objective is `MSE + reg*(mean(U²)+mean(V²))`. A fixed observed mean occupies one rank component; the remaining components represent the residual. MLP uses Adam with coupled L2 weight decay; its logged complete objective is `MSE + (reg/2)*sum(parameter²)`. A minibatch loss is not presented as that complete objective. Diagnostic timings include logging and scoring forward passes, while main reconstruction timings exclude scoring and file I/O; these timings are not interchangeable.
+
+On real development images, the 200-step trajectory predictions exactly matched the original low-rank and MLP implementations, with maximum difference zero. Complete validation logs: [training_curves.csv](../results/budget_val_v02/training_curves.csv).
+
+## 4. Observed budget results and configuration selection
+
+The following values first average Tx, seeds, mechanisms and fractions equally within each region, then average across the six validation regions. Observed RMSE uses clipped predictions. Complete raw observation errors and objective decompositions remain available in the curve CSV.
 
 {table(observed)}
 
-![完整观测误差](../figures/budget_observed.png)
+![Complete-observation error](../figures/budget_observed.png)
 
-![验证隐藏误差](../figures/budget_hidden.png)
+![Validation hidden error](../figures/budget_hidden.png)
 
-![诊断误差与耗时](../figures/budget_error_runtime.png)
+![Diagnostic error and runtime](../figures/budget_error_runtime.png)
 
-选择标准为区域平均隐藏RMSE，平衡所有机制和比例；相同时优先较少步数。没有按测试图逐图择优。冻结配置为：
+Selection minimizes region-averaged hidden RMSE, balancing both mechanisms and all three fractions; ties prefer fewer steps. Settings were not selected separately for each test image. The frozen configuration is:
 
 ```json
 {json.dumps(selection['methods'],indent=2)}
 ```
 
-冻结时间：{selection['frozen_utc']}。科学实现SHA-256：{selection['scientific_source_sha256']}；完整候选、验证版本plan哈希、配置来源和选择依据见configs/selected_v02.json。
+Freeze time: `{selection['frozen_utc']}`. Scientific source SHA-256: `{selection['scientific_source_sha256']}`. Full candidates, validation-plan hash, configuration provenance and selection rationale are recorded in [selected_v02.json](../configs/selected_v02.json).
 
-预设额外调参门槛：低秩所有预算的完整观测raw RMSE均≥0.04才检查有限正则候选；本次触发={gate['triggered']}，记录值={gate['observed_rmse_by_step']}。如触发，只在预算研究选定步数下比较reg=0.01和0.1，秩/学习率/架构不变，使用全部相同验证条件；没有扩大搜索。附加验证检查点为{432 if gate['triggered'] else 0}，完整候选表如下（不同正则不可当作同一预算轨迹）：
+The prespecified additional-tuning gate requires complete-observation raw low-rank RMSE to be at least 0.04 in normalized units at every budget. Gate triggered: **{gate['triggered']}**. Recorded values: `{gate['observed_rmse_by_step']}`. If triggered, only `reg=0.01` and `0.1` would be compared at the budget-selected step count, keeping rank, learning rate and architecture fixed and using the same complete validation conditions. The search was not expanded. Additional validation checkpoints: **{432 if gate['triggered'] else 0}**. The complete candidate table follows; candidates with different regularization must not be treated as checkpoints on one trajectory. The table rounds values to four decimals; exact regularization values are preserved in the configuration JSON and candidate CSV.
 
 {table(compact)}
 
-**观察与解释分开**：观察到的完整观测及隐藏误差趋势以上述表和各条件曲线为准。观测误差下降而隐藏误差上升提示当前模型/缺失机制下过拟合或外推问题，不能自动选最长训练；两者下降才支持原预算不足。低秩平台可能来自正则权衡、优化或秩限制，不等同已证明表示能力不足。没有运行秩/结构消融、学习率搜索或新的模型，不把这些假设写成结果。低秩正则项约0.00438、数据项约0.00176，较早进入平台；这与正则权衡一致，但未以消融验证因果。该筛查门槛是预算管理规则，不是物理可靠性或统计显著性阈值，未触发不等于已证明正则最优。
+**Observations:** The tables and condition-specific curves show how complete observed and hidden errors change with budget. MLP observation fitting improves with more updates, but its aggregate validation hidden error increases. Low-rank hidden error improves slightly while observation error plateaus.
 
-## 5. 冻结后的保留集结果
+**Interpretation:** Falling observation error with rising hidden error suggests overfitting or extrapolation problems under the evaluated model and missingness mechanisms; it does not justify automatically choosing the longest budget. Improvements in both errors would support an insufficient original budget. A low-rank plateau may reflect regularization, optimization or rank limitations, but does not establish inadequate representation capacity. The low-rank regularization term is approximately 0.00438 and data term approximately 0.00176, consistent with a regularization tradeoff.
 
-新版本test_v02完整12图×3比例×2机制×3seed×4方法=864次，全部重新拟合；未复用旧拟合结果。低秩在六条件等权平均的隐藏RMSE由11.044降至10.820dB，改善约0.224dB；仍未改变本预算下的整体方法排序。1%/5%的配对改善约0.24–0.37dB，10%仅约0.004–0.016dB，不宜夸大实际价值。MLP、IDW、平滑配置未变，重新拟合结果与基线相同。老版本仅用于事后配对比较与独立检查。训练不读取隐藏真值，全部原始预测和共享掩码保存在独立版本目录。参数选择已在查看本次保留集结果前冻结；但旧测试已看过，所以只能称后续探索性评价。
+**Unverified hypotheses:** No rank/architecture ablation, learning-rate search or new model was executed, so those possible explanations are not reported as findings. The gate is a budget-management rule, not a physical-reliability or statistical-significance threshold. A false gate does not establish optimal regularization, and the causal role of regularization was not tested by ablation.
+
+## 5. Holdout results after configuration freeze
+
+The complete `test_v02` comparison contains 12 images × 3 fractions × 2 mechanisms × 3 seeds × 4 methods = **864 new fits**. No previous fitted outputs were reused. Low-rank hidden RMSE averaged equally across six conditions decreased from 11.044 to 10.820 dB, approximately 0.224 dB, without changing the aggregate method ranking under the evaluated budget. Paired improvements at 1%/5% are approximately 0.24–0.37 dB; at 10% they are only approximately 0.004–0.016 dB. Their practical magnitude should not be overstated.
+
+MLP, IDW and smoothing configurations were unchanged, and their new predictions matched the baseline. Historical results were used only for subsequent paired comparisons and independent checks. Training does not read hidden truth. Raw predictions and shared masks are retained locally in separate version directories. Parameters were frozen before viewing this new holdout comparison, but the original holdout had already been viewed, so this remains a follow-up exploratory evaluation.
 
 {table(new[['version','fraction','mechanism','method','mae_db','rmse_db','bias_db','observed_rmse_db','hole_rmse_db','gradient_rmse_db','seconds']])}
 
-![新版主结果](../figures/performance_test_v02.png)
+![New-version main results](../figures/performance_test_v02.png)
 
-![区域级版本配对差异](../figures/baseline_new_paired.png)
+![Region-level paired version differences](../figures/baseline_new_paired.png)
 
-配对差异new−baseline，负值表示新版较低：
+Paired differences are new minus baseline; negative values favor the new version:
 
 {table(paired)}
 
-验证子条件还显示：MLP随机10%下隐藏RMSE从4.675降至4.358dB，但区域5%从4.988升至5.354dB，1%也变差。总体选择200步体现平衡目标，不意味着所有条件都偏好短训练。
+Validation subconditions show that MLP hidden RMSE under random 10% observations decreases from 4.675 to 4.358 dB, while under contiguous-hole 5% observations it increases from 4.988 to 5.354 dB; 1% conditions also worsen. Choosing 200 steps reflects the balanced aggregate criterion, not a claim that every condition favors shorter training.
 
-区域是汇总和bootstrap单位，2000次重抽整个区域，保留其Tx/seed结构。6区域区间是探索性；不按像素独立抽样。新版平滑−IDW差值范围{diff.min():.4f}至{diff.max():.4f}dB，均值{diff.mean():.4f}dB；应报告这种较小差异，不能因区间不跨零就称明显实际优势。高梯度评分继续采用预设室外差分模板前10%，隐藏、观测和空白区分开计分。CSV也记录裁剪前RMSE与裁剪比例。
+Regions are the aggregation and bootstrap units. The 2,000 bootstrap resamples draw entire regions while retaining their Tx/seed structure. Intervals based on six holdout regions are exploratory; pixels are not sampled as independent observations. New-version smoothing minus IDW RMSE ranges from {diff.min():.4f} to {diff.max():.4f} dB, averaging {diff.mean():.4f} dB. These small effect sizes must be reported; an exploratory interval excluding zero alone does not establish a substantial practical advantage. High-gradient scoring retains the prespecified top 10% of outdoor finite-difference gradients. Hidden, observed and hole-interior locations are scored separately. CSVs also record unclipped RMSE and clipping fractions.
 
-![新版重建](../figures/reconstruction_test_v02.png)
+![New-version reconstruction](../figures/reconstruction_test_v02.png)
 
-空间展示沿用基线预设中位图，不按新结果挑好看图；统一信号色标−147至−47dB，误差0至30dB。数据署名及修改说明见FIGURE_ATTRIBUTION.md。
+The spatial example retains the baseline's prespecified median representative, without selecting an attractive image from new results. Signal color limits are shared at −147 to −47 dB; error limits are 0 to 30 dB. Attribution and modifications are documented in [FIGURE_ATTRIBUTION.md](FIGURE_ATTRIBUTION.md).
 
-## 6. 真正首次运行、独立复现与一致性
+## 6. Genuine first runs, independent reproduction and consistency
 
-首次运行命令要求空输出目录，只允许读取哈希核验后的原始ZIP，重新处理图、生成掩码、拟合四种方法、评分和导出；不读取已有processed/运行/预测作为输入。参考记录只在新拟合完成后用于比较。实际记录在experiments/fresh_dev_v02/reports/fresh_verification.json和experiments/fresh_test_v02/reports/fresh_verification.json。前者兼容基线200步，后者复现本次冻结配置。每次4个真实图条件拟合，cache=0。精简公开候选的实际源码也通过15项测试并在另一个空目录执行4次真实fresh拟合；公开包没有参考数组，拟合后另行与完整本地基线对照，掩码/预测/指标最大差异均为0，见public_candidate_fresh_verification.json。另实际执行显式--cpu的fresh检查4次，与对应基线完全一致。新增实际拟合调用总计1364（不计单元测试），诊断保存的1440个检查点共享480条轨迹，不当作独立拟合计数。
+Fresh-run commands require an empty output directory and read only the hash-verified original ZIP to process a real image, generate masks, fit all four methods, score and export. Existing processed arrays, records and predictions are not fitting inputs. Reference records are accessed only after new fitting finishes. Actual records are preserved in `experiments/fresh_dev_v02/reports/fresh_verification.json` and `experiments/fresh_test_v02/reports/fresh_verification.json`. The development example reproduces the baseline 200-step configuration; the holdout example reproduces the final frozen configuration. Each executed four real fits with zero cache hits.
 
-另外以已有完整真值重新计算baseline_v01和test_v02全部864条主指标，分别对照CSV与JSON，检查共享216掩码、观测数量和选定参数，见reports/score_verification.json及*_recomputed.csv。图和报告均由这些版本汇总表生成，presentation_manifest.json保存输入CSV和图表哈希。
+The minimal public staging source passed all 15 tests and executed four fresh fits in another empty directory. Its package contains no reference arrays; after fitting, outputs were separately compared against the complete local baseline. Masks, predictions and metrics matched exactly, as recorded in [public_candidate_fresh_verification.json](public_candidate_fresh_verification.json). An explicit `--cpu` fresh check also executed four fits and matched its baseline exactly. The revision executed **1,364 fitting calls**, excluding unit tests. Its 1,440 diagnostic checkpoints share 480 trajectories and are not independent fitting calls.
 
-requirements-lock.txt准确名称是**直接依赖版本固定清单**，不是含传递依赖/轮子哈希的完整锁。实际创建不继承system-site-packages的干净Python3.12环境，安装固定清单并运行测试/真实fresh任务；干净环境解析版本保存clean_environment.json。本地原实验环境与用户安装步骤分别说明，不宣称交付包含.venv。仅CPU实测，不推断跨设备确定性。
+Using the complete local truth and raw outputs, all 864 baseline and all 864 new-version main metric records were recomputed independently and compared against CSV and JSON. Checks also covered 216 shared masks, equal observation counts and selected parameters. Evidence is in [score_verification.json](score_verification.json) and the `*_recomputed.csv` files. Figures and report tables derive from the version-specific summaries; `presentation_manifest.json` records input CSV and figure hashes.
 
-## 7. 数据许可、打包与引用
+`requirements-lock.txt` is a **pinned direct-dependency list**, not a complete transitive or wheel-hash lock. A clean Python 3.12 environment without system-site-packages was created, installed from the pins and used for tests and real fresh runs. Resolved versions are recorded in `clean_environment.json`. The local experimental environment is distinguished from user installation instructions; no `.venv` is supplied. **Only CPU was actually tested; cross-device determinism is unverified.**
 
-上一版“未找到明确许可”遗漏了官网HTML中的链接，现已修正。官方原始数据下载链接旁有`rel=license`指向[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，[官方源码](https://raw.githubusercontent.com/radiomapseer/radiomapseer.github.io/master/index.html)第36行可核实。本地保存官方HTML、仓库源码、作者说明和哈希；不从论文许可或RadioUNet MIT推断数据许可。见DATA_LICENSE.md。
+## 7. Data licensing, packaging and citation
 
-原始数据：本地ZIP只读复用，不放公开候选。处理数组、掩码与原始预测：完整本地包包含，公开候选排除。数值汇总和必要验证表：公开候选包含。数据衍生展示图：按官网CC BY 4.0标记保留，说明mask/色标/预测/误差等改动、署名Yapar/Levie/Kutyniok/Caire并链接论文；不声称作者背书。原创代码仍MIT，许可证分开处理。详细旧历史在本地history，公开包只有精简展示与可复现配置，排除虚拟环境、凭据、缓存、本机绝对路径和大预测，没有自动上传或发布，也未联系作者。
+The earlier statement that no clear data license had been found missed a link in the official website HTML and is superseded. Next to the original download, `rel=license` points to [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), verifiable at line 36 of the [official source](https://raw.githubusercontent.com/radiomapseer/radiomapseer.github.io/master/index.html). Official HTML, repository source, author instructions and hashes are retained locally. Data licensing is not inferred from the paper license or RadioUNet's MIT code license. See [DATA_LICENSE.md](DATA_LICENSE.md).
 
-## 8. 限制与未来工作
+The original ZIP is reused read-only locally and excluded from the public candidate. Processed arrays, masks and raw predictions are included in the complete local package and excluded from the public candidate. Numerical summaries and necessary verification tables are public. Selected dataset-derived display figures retain the official CC BY 4.0 notice, credit Çağkan Yapar, Ron Levie, Gitta Kutyniok and Giuseppe Caire, link the paper, and describe masking, color mapping, predictions and error-map modifications. Underlying layouts retain © OpenStreetMap contributors attribution and the upstream copyright/license link. No author endorsement is implied.
 
-只评价当前两种神经表示及有限候选、无车DPM、无噪声观测、6个验证及6个已查看保留区域，不推出“低秩/神经场不适合无线地图”。没有独立的新确认性地图组，未核实地理重叠；截断前真值不可恢复，GPU未实测。后续可研究建筑边界先验、删失模型、不确定性和DeepMIMO；均未作为已完成贡献。
+Original code remains MIT, separate from the data license. Detailed historical records remain in local `history`; public contents are compact, with reproducible configurations and no environments, credentials, caches, machine-specific absolute paths or large prediction arrays. The minimal candidate is published to GitHub under user authorization. No GitHub Release, PyPI package or website deployment was created, and the data authors were not contacted.
 
-## 9. 命令
+## 8. Limitations and future work
 
-从项目根目录：`python scripts/pipeline.py all --output experiments/v02 --archive data/raw/RadioMapSeer.zip`。只会操作独立版本目录，缓存核验计数明确。真正独立从头运行：`python scripts/pipeline.py fresh --output experiments/fresh_new --archive data/raw/RadioMapSeer.zip --fresh-split dev`（必须为空）；最终配置独立复现用`--fresh-split test`。阶段命令：prepare、dev-budget、val-budget、ridge、select、main、verify、summarize。改科学源码后必须新输出/新冻结，不能沿用旧选择。
+Evidence is limited to the evaluated two trainable representations and finite candidates, no-car DPM simulations, noiseless observations, six validation regions and six previously viewed holdout regions. It does not establish that low-rank models or neural fields are generally unsuitable for radio maps. No independent new confirmatory map set was evaluated, geographic overlap remains unchecked, pre-truncation truth is unavailable and GPU execution is untested. Building-boundary priors, censoring models, uncertainty and DeepMIMO are future work, not completed contributions.
+
+## 9. Commands
+
+From the project root:
+
+```bash
+python scripts/pipeline.py all --output experiments/v02 --archive data/raw/RadioMapSeer.zip
+python scripts/pipeline.py fresh --output experiments/fresh_new --archive data/raw/RadioMapSeer.zip --fresh-split dev
+```
+
+Fresh output must be empty. Use `--fresh-split test` for an independent example under the final configuration. Stage commands are `prepare`, `dev-budget`, `val-budget`, `ridge`, `select`, `main`, `verify` and `summarize`. Version directories isolate outputs and cache verification counts. Scientific-source changes require new output directories and a new configuration freeze; old selections cannot silently be reused.
+
+Software version: **v0.1.0**. `baseline_v01` and `test_v02` identify experiment versions. The 864 main fits are computational runs, not 864 independent statistical samples; the statistical unit is the map region.
 '''
-    (out/'reports/report_zh.md').write_text(report)
+    (out/'reports/report.md').write_text(report)

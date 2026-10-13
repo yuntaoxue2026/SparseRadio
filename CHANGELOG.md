@@ -14,3 +14,5 @@
 - Separated the complete local experimental package from the minimal public candidate. The minimal candidate is published to the authorized GitHub repository; no GitHub Release, PyPI publication or website deployment.
 
 - Publication review: aligned software version headings and publication wording; retained frozen experiment versions and numerical evidence unchanged.
+
+- Converted the experiment report and its generation template to English; updated README and packaging links. Numerical results and frozen scientific configuration are unchanged.
